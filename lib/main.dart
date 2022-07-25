@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:wasteapp/mpesakeys/keys.dart';
 import 'package:wasteapp/pages/collection_page.dart';
+import 'package:wasteapp/pages/collection_register.dart';
 import 'pages/home_page.dart';
 // import 'pages/auth_page.dart';
 import 'package:mpesa_flutter_plugin/mpesa_flutter_plugin.dart';
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // home: AuthScreen(),
       // home: CollectionPage(),
-      home: HomePage(),
+      // home: HomePage(),
+      home: CollectionRegister(),
       debugShowCheckedModeBanner: false,
       routes: {
         CollectionPage.routeName: (context) => CollectionPage(),

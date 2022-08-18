@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "582253827589",
+    "project_id": "esafi-b4575",
+    "storage_bucket": "esafi-b4575.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582253827589:android:fd72608ffb7dad2f6dae6c",
+        "android_client_info": {
+          "package_name": "com.example.wasteapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582253827589-uivff55scagf3d22btkbbpu622j9gsrk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wasteapp",
+            "certificate_hash": "895198980387ed65f8913810e3f7ed15c7d6f044"
+          }
+        },
+        {
+          "client_id": "582253827589-pk1o10mins67tgfb9mshcf1egbak0rdl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGGL8IBwX5STDoSwnENcQThgm841AVQ04"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582253827589-pk1o10mins67tgfb9mshcf1egbak0rdl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

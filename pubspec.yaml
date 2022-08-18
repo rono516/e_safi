@@ -36,6 +36,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   mpesa_flutter_plugin: ^1.6.0
+  intl: ^0.17.0
+  firebase_core: ^1.20.1
+  firebase_auth: any
+  cloud_firestore: ^3.4.4
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +51,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -89,7 +89,7 @@ class _CollectionPageState extends State<CollectionPage> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
-                        Icon(Icons.more_horiz),
+                        Icon(Icons.home, color: Colors.green),
                       ],
                     ),
                     SizedBox(height: 20),

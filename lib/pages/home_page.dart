@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, duplicate_ignore
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wasteapp/pages/login.dart';
 import 'package:wasteapp/pages/main_screen.dart';
+import 'package:wasteapp/pages/message_page.dart';
+import 'package:wasteapp/pages/profile_page.dart';
+import 'package:wasteapp/widgets/drawer.dart';
 import 'collection_page.dart';
 import '../widgets/exercise_title.dart';
 import 'package:intl/intl.dart';
@@ -23,18 +25,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-          child: Container(
-        color: Colors.green[500],
-        child: ListView(children: [
-          TextButton(
-              onPressed: signOut,
-              child: Text('Logout', style: TextStyle(color: Colors.white))),
-          TextButton(
-              onPressed: () {},
-              child: Text('My Profile', style: TextStyle(color: Colors.white)))
-        ]),
-      )),
+      drawer: MainDrawer(),
       backgroundColor: Colors.green[800],
       body: SafeArea(
         child: Column(children: [
@@ -177,14 +168,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ]),
       ),
-      bottomNavigationBar: BottomNavigationBar(items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Message'),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Logout',
-        ),
-      ]),
     );
   }
 }
@@ -197,4 +180,35 @@ Future<void> signOut() async {
       .then((value) {
     MaterialPageRoute(builder: ((context) => MainScreen()));
   });
+}
+
+class BottomNavigationPage extends StatefulWidget {
+  const BottomNavigationPage({Key? key}) : super(key: key);
+
+  @override
+  State<BottomNavigationPage> createState() => _BottomNavigationPageState();
+}
+
+class _BottomNavigationPageState extends State<BottomNavigationPage> {
+  int currentIndex = 0;
+  final _pages = [HomePage(), MessagePage(), ProfilePage()];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _pages[currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: currentIndex,
+          backgroundColor: Colors.grey[300],
+          selectedItemColor: Colors.green,
+          unselectedItemColor: Colors.black,
+          type: BottomNavigationBarType.fixed,
+          onTap: (index) => setState(() => currentIndex = index),
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.message), label: 'Message'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          ]),
+    );
+  }
 }

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 // import '../widgets/exercise_title.dart';
 import 'package:intl/intl.dart';
+import 'package:wasteapp/pages/home_page.dart';
 import 'package:wasteapp/pages/login.dart';
 import 'package:wasteapp/pages/main_screen.dart';
 import 'dart:core';
@@ -39,7 +40,6 @@ class _CollectionRegisterState extends State<CollectionRegister> {
               child: Center(
                 child: Column(
                   children: [
-                  
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       // ignore: prefer_const_literals_to_create_immutables
@@ -52,13 +52,19 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                         Container(
                             color: Colors.grey[300],
                             child: IconButton(
-                                onPressed: () => Navigator.of(context)
-                                    .pushReplacementNamed(MainScreen.routeName),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              BottomNavigationPage()));
+                                },
+                                // => Navigator.of(context)
+                                //     .pushReplacementNamed(HomePage.routeName),
                                 icon: Icon(Icons.home, color: Colors.green))),
                       ],
                     ),
                     SizedBox(height: 20),
-
                     Expanded(
                         child: Column(
                       children: <Widget>[
@@ -75,7 +81,6 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                                     fillColor: Colors.white,
                                   )),
                               SizedBox(height: sizedboxheight),
-
                               TextFormField(
                                   controller: numberController,
                                   textInputAction: TextInputAction.next,
@@ -86,7 +91,6 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                                     labelText: 'Number',
                                   )),
                               SizedBox(height: sizedboxheight),
-
                               TextFormField(
                                 textInputAction: TextInputAction.next,
                                 decoration: InputDecoration(
@@ -94,7 +98,6 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                                     hintText: 'Area of collection'),
                               ),
                               SizedBox(height: sizedboxheight),
-
                               TextFormField(
                                   controller: apartmentController,
                                   textInputAction: TextInputAction.next,
@@ -104,7 +107,6 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                                     fillColor: Colors.white,
                                   )),
                               SizedBox(height: sizedboxheight),
-
                               TextFormField(
                                 textInputAction: TextInputAction.next,
                                 keyboardType: TextInputType.number,
@@ -113,7 +115,6 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                                     hintText: 'No of houses'),
                               ),
                               SizedBox(height: sizedboxheight),
-
                               TextFormField(
                                 controller: dateController,
                                 decoration: InputDecoration(
@@ -146,7 +147,6 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                                   return null;
                                 },
                               ),
-
                               SizedBox(height: sizedboxheight),
                             ],
                           ),

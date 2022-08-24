@@ -30,7 +30,8 @@ class MainScreen extends StatelessWidget {
                     if (user['wrool'] == 'Collector') {
                       return CollectorPgae();
                     } else if (user['wrool'] == 'Tenant') {
-                      return HomePage();
+                      //return HomePage();
+                      return BottomNavigationPage();
                     }
                   }
                   return Material(

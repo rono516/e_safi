@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 // import '../widgets/exercise_title.dart';
 import 'package:intl/intl.dart';
+import 'package:wasteapp/pages/login.dart';
+import 'package:wasteapp/pages/main_screen.dart';
 import 'dart:core';
 
 import 'package:wasteapp/values/height.dart';
@@ -37,7 +39,7 @@ class _CollectionRegisterState extends State<CollectionRegister> {
               child: Center(
                 child: Column(
                   children: [
-                    //exercise heading
+                  
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       // ignore: prefer_const_literals_to_create_immutables
@@ -49,10 +51,10 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                         ),
                         Container(
                             color: Colors.grey[300],
-                            child: Icon(Icons.home, color: Colors.green)),
-                        // ElevatedButton(
-                        //     onPressed: () {},
-                        //     child: Icon(Icons.home, color: Colors.green)),
+                            child: IconButton(
+                                onPressed: () => Navigator.of(context)
+                                    .pushReplacementNamed(MainScreen.routeName),
+                                icon: Icon(Icons.home, color: Colors.green))),
                       ],
                     ),
                     SizedBox(height: 20),
@@ -64,13 +66,9 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                           child: Column(
                             // ignore: prefer_const_literals_to_create_immutables
                             children: [
-                              // Text('We\'re signing up for collection'),
-                              // SizedBox(height: 10),
-
                               TextFormField(
                                   controller: nameController,
                                   textInputAction: TextInputAction.next,
-                                  // keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     labelText: 'Full name',
                                     hintText: 'Full name',
@@ -140,9 +138,6 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                                     // ignore: null_check_always_fails
                                     return null!;
                                   });
-
-                                  // dateController =
-                                  //     date as TextEditingController;
                                 },
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -158,13 +153,6 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                         ),
                       ],
                     )),
-
-                    // FloatingActionButton(
-                    //     onPressed: () {
-                    //       // startTransaction(amount: 10.0, phone: "254792009556");
-                    //     },
-                    //     child: Text('Pay Now')),
-
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),

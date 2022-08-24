@@ -11,6 +11,7 @@ import 'forgot.dart';
 import 'register.dart';
 
 class LoginPage extends StatefulWidget {
+  static const routeName = '/login_page';
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -30,7 +31,8 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: <Widget>[
             Container(
-              color: Colors.orangeAccent[700],
+              color: Colors.green[800],
+              // Colors.orangeAccent[700],
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               // height: MediaQuery.of(context).size.height * 0.70,
@@ -141,7 +143,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 5),
                         RaisedButton(
-                          color: Colors.orange[900],
+                          color: Colors.green[900],
+                          // Colors.orange[900],
                           textColor: Colors.white,
                           shape: RoundedRectangleBorder(
                               // side: BorderSide(color: Colors.black, width: 1),
@@ -159,7 +162,6 @@ class _LoginPageState extends State<LoginPage> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
-                              decoration: TextDecoration.underline,
                             ),
                           ),
                         ),

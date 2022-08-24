@@ -39,12 +39,14 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange[900],
+      backgroundColor: Colors.green[800],
+      // Colors.orange[900],
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Container(
-              color: Colors.orangeAccent[700],
+              color: Colors.green[800],
+              // Colors.orangeAccent[700],
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: SingleChildScrollView(
@@ -305,6 +307,34 @@ class _RegisterState extends State<Register> {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) => {postDetailsToFirestore(email, rool)})
+          //     .then((value) {
+          //   return StreamBuilder<User?>(
+          //       stream: FirebaseAuth.instance.authStateChanges(),
+          //       builder: ((context, snapshot) {
+          //         if (snapshot.hasData && snapshot.data != null) {
+          //           return StreamBuilder(
+          //               stream: FirebaseFirestore.instance
+          //                   .collection("users")
+          //                   .doc(snapshot.data!.uid)
+          //                   .snapshots(),
+          //               builder: (BuildContext context,
+          //                   AsyncSnapshot<DocumentSnapshot> snapshot) {
+          //                 if (snapshot.hasData && snapshot.data != null) {
+          //                   final user = snapshot.data!;
+          //                   if (user['wrool'] == 'Collector') {
+          //                     return CollectorPgae();
+          //                   } else {
+          //                     return CollectionRegister();
+          //                   }
+          //                 }
+          //                 return Material(
+          //                   child: Center(child: CircularProgressIndicator()),
+          //                 );
+          //               });
+          //         }
+          //         return HomePage();
+          //       }));
+          // })
           .catchError((e) {});
     }
   }

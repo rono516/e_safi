@@ -3,6 +3,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:wasteapp/pages/home_page.dart';
 import '../widgets/exercise_title.dart';
 import 'package:mpesa_flutter_plugin/mpesa_flutter_plugin.dart';
 
@@ -89,7 +90,12 @@ class _CollectionPageState extends State<CollectionPage> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
-                        Icon(Icons.home, color: Colors.green),
+                        // Icon(Icons.home, color: Colors.green),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            icon: Icon(Icons.home, color: Colors.green))
                       ],
                     ),
                     SizedBox(height: 20),

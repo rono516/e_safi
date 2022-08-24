@@ -1,25 +1,42 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, duplicate_ignore
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wasteapp/pages/login.dart';
+import 'package:wasteapp/pages/main_screen.dart';
 import 'collection_page.dart';
 import '../widgets/exercise_title.dart';
-// import './pages/collection_page.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
+  static const routeName = '/home_page';
 
   @override
   State<HomePage> createState() => _HomePageState();
+
+  //final now = DateTime.now();
+  //String formatter = DateFormat('yMd').format(DateTime.now());
+  final _auth = FirebaseAuth.instance;
 }
 
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+          child: Container(
+        color: Colors.green[500],
+        child: ListView(children: [
+          TextButton(
+              onPressed: signOut,
+              child: Text('Logout', style: TextStyle(color: Colors.white))),
+          TextButton(
+              onPressed: () {},
+              child: Text('My Profile', style: TextStyle(color: Colors.white)))
+        ]),
+      )),
       backgroundColor: Colors.green[800],
       body: SafeArea(
-        // child: Padding(
-        // padding: const EdgeInsets.symmetric(horizontal: 25.0),
         child: Column(children: [
           //Greetings
           Padding(
@@ -39,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 8), //space between texts
-                    Text('June 16, 2022',
+                    Text(DateFormat.yMMMMd('en_US').format(DateTime.now()),
                         style: TextStyle(
                           color: Colors.green[100],
                           fontSize: 17,
@@ -65,13 +82,13 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Your next collection date is:',
+                Text('Your next collection is:',
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 20)),
                 // Icon(Icons.more_horiz, color: Colors.white)
-                Text('June 30, 2022',
+                Text(DateFormat.yMMMMd('en_US').format(DateTime.now()),
                     style: TextStyle(
                         color: Colors.white,
                         // fontWeight: FontWeight.bold,
@@ -106,11 +123,6 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
-                        //
-                        // style: TextStyle(
-                        //     color: Colors.black,
-                        //     fontWeight: FontWeight.bold,
-                        //     fontSize: 20),
                         Icon(Icons.more_horiz),
                       ],
                     ),
@@ -168,9 +180,21 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Message'),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Person'),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Logout',
+        ),
       ]),
     );
   }
 }
-//,,
+
+Future<void> signOut() async {
+  User? user = FirebaseAuth.instance.currentUser;
+  await FirebaseAuth.instance
+      .signOut()
+      .then((value) => user = FirebaseAuth.instance.currentUser)
+      .then((value) {
+    MaterialPageRoute(builder: ((context) => MainScreen()));
+  });
+}

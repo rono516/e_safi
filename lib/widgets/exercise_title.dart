@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 
-class ExerciseTitle extends StatelessWidget {
+class WasteTile extends StatelessWidget {
   final icon;
-  final String exerciseTitle;
+  final String dataTitle;
   final int number;
-  const ExerciseTitle(
+  const WasteTile(
       {Key? key,
       required this.icon,
-      required this.exerciseTitle,
+      required this.dataTitle,
       required this.number})
       : super(key: key);
 
@@ -30,13 +30,13 @@ class ExerciseTitle extends StatelessWidget {
                 color: Colors.orange,
                 child: Icon(icon, size: 25, color: Colors.white)),
           ),
-          title: Text(exerciseTitle,
+          title: Text(dataTitle,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           subtitle: Text(
             '$number Exercises',
             style: TextStyle(color: Colors.grey),
           ),
-          trailing: Icon(Icons.more_horiz),
+          // trailing: Icon(Icons.more_horiz),
         ),
       ),
     );

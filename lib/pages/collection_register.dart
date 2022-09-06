@@ -32,6 +32,7 @@ class _CollectionRegisterState extends State<CollectionRegister> {
   User? user = FirebaseAuth.instance.currentUser;
   late String userId = user!.uid;
   late String? userEmail = user!.email;
+  final String role = 'Tenant';
 
   // var _userData = userModel.email = user.email
 
@@ -58,10 +59,10 @@ class _CollectionRegisterState extends State<CollectionRegister> {
   }
 
   void _saveForm() async {
-    final isValid = _formKey.currentState!.validate();
-    if (!isValid) {
-      return;
-    }
+    // final isValid = _formKey.currentState!.validate();
+    // if (!isValid) {
+    //   return;
+    // }
     _formKey.currentState!.save();
     // print('fullName ${_userData.fullName}');
     // print('number ${_userData.number}');
@@ -71,23 +72,34 @@ class _CollectionRegisterState extends State<CollectionRegister> {
     // print('Date ' +
     //     DateFormat.yMMMMd('en_US')
     //         .format(DateTime.parse(_userData.date.toString())));
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = _auth.currentUser;
-    UserModel userModel = UserModel();
-    // userModel.email = email;
-    //  userModel.uid = user!.uid;
-    userModel.fullName = _userData.fullName;
-    userModel.number = _userData.number;
-    userModel.location = _userData.location;
-    userModel.apartment = _userData.apartment;
-    userModel.houses = _userData.houses;
-    userModel.date = _userData.date;
-    // userModel.wrool = rool;
-    await firebaseFirestore
-        .collection("users")
-        .doc(user!.uid)
-        .set(userModel.toMap());
-    Navigator.pop(context);
+
+    try {
+      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      User? user = _auth.currentUser;
+      UserModel userModel = UserModel();
+      userModel.email = user!.email;
+      userModel.wrool = role;
+      userModel.uid = user.uid;
+      userModel.fullName = _userData.fullName;
+      userModel.number = _userData.number;
+      userModel.location = _userData.location;
+      userModel.apartment = _userData.apartment;
+      userModel.houses = _userData.houses;
+      userModel.date = _userData.date;
+      // userModel.wrool = rool;
+      await firebaseFirestore
+          .collection("users")
+          .doc(user.uid)
+          .set(userModel.toMap(), SetOptions(merge: true))
+          .then((value) => Navigator.of(context).pop());
+      //, SetOptions(merge: true)
+      // .then((value) => MaterialPageRoute(
+      //     builder: ((context) => BottomNavigationPage())));
+    } catch (error) {
+      print('Error: $error');
+    }
+
+    // Navigator.pop(context);
   }
 
   @override
@@ -256,7 +268,7 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                                     fullName: _userData.fullName,
                                     number: _userData.number,
                                     location: _userData.location,
-                                    apartment: value,
+                                    apartment: value.toString(),
                                     houses: _userData.houses,
                                     date: _userData.date,
                                   );
@@ -337,28 +349,32 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                         ),
                       ],
                     )),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.green),
-                      width: double.infinity,
-                      child: TextButton(
-                        onPressed: _saveForm,
+                    FloatingActionButton(
+                      onPressed: _saveForm,
+                      child: Icon(Icons.app_registration),
+                    )
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(10),
+                    //       color: Colors.green),
+                    //   width: double.infinity,
+                    //   child: TextButton(
+                    //     onPressed: () => _saveForm,
 
-                        //     () {
-                        //   if (_formKey.currentState!.validate()) {
-                        //     //validate the form and show a dummy message || Registering you!
-                        //     ScaffoldMessenger.of(context)
-                        //         .showSnackBar(SnackBar(content: Text(userId)));
-                        //   }
-                        //   print(userId);
-                        // },
-                        child: Text(
-                          'SignUp for collection',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
+                    //     //     () {
+                    //     //   if (_formKey.currentState!.validate()) {
+                    //     //     //validate the form and show a dummy message || Registering you!
+                    //     //     ScaffoldMessenger.of(context)
+                    //     //         .showSnackBar(SnackBar(content: Text(userId)));
+                    //     //   }
+                    //     //   print(userId);
+                    //     // },
+                    //     child: Text(
+                    //       'SignUp for collection',
+                    //       style: TextStyle(color: Colors.white),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

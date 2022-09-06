@@ -104,18 +104,18 @@ class _CollectionPageState extends State<CollectionPage> {
                     Expanded(
                       child: ListView(
                         children: [
-                          ExerciseTitle(
-                              exerciseTitle: 'Bins available',
+                          WasteTile(
+                              dataTitle: 'Bins available',
                               icon: Icons.numbers_outlined,
                               number: 5),
                           SizedBox(height: 5),
-                          ExerciseTitle(
-                              exerciseTitle: 'Current bin level',
+                          WasteTile(
+                              dataTitle: 'Current bin level',
                               icon: Icons.transform_sharp,
                               number: 16),
                           SizedBox(height: 5),
-                          ExerciseTitle(
-                              exerciseTitle: 'Bin location',
+                          WasteTile(
+                              dataTitle: 'Bin location',
                               icon: Icons.location_city,
                               number: 34),
                           SizedBox(height: 5),

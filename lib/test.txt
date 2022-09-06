@@ -1,0 +1,44 @@
+Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: ListTile(
+          leading: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Container(
+                padding: EdgeInsets.all(6),
+                color: Colors.orange,
+                child:
+                    Icon(Icons.location_city, size: 25, color: Colors.white)),
+          ),
+          title: Text('Bin location',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          subtitle: FutureBuilder<DocumentSnapshot>(
+            future: users.doc(userId).get(),
+            builder: (BuildContext context,
+                AsyncSnapshot<DocumentSnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Text("Something went wrong");
+              }
+              if (snapshot.connectionState == ConnectionState.done) {
+                Map<String, dynamic> data =
+                    snapshot.data!.data() as Map<String, dynamic>;
+                return Text(
+                  data['location'].toString(),
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                );
+              }
+
+              return Text("loading");
+            },
+          ),
+          // trailing: Icon(Icons.more_horiz),
+        ),
+      ),
+    ),

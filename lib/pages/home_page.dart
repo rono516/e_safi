@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, duplicate_ignore
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wasteapp/pages/main_screen.dart';
@@ -22,6 +23,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late String userEmail;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  String userId = FirebaseAuth.instance.currentUser!.uid;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,13 +44,35 @@ class _HomePageState extends State<HomePage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Hi, Collins!',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold),
+                    FutureBuilder<DocumentSnapshot>(
+                      future: users.doc(userId).get(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text("Something went wrong");
+                        }
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          Map<String, dynamic> data =
+                              snapshot.data!.data() as Map<String, dynamic>;
+                          return Text(
+                            "Hi! ${data['fullName']}",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold),
+                          );
+                        }
+
+                        return Text("loading");
+                      },
                     ),
+                    // Text(
+                    //   'Hi, Collins!',
+                    //   style: TextStyle(
+                    //       color: Colors.white,
+                    //       fontSize: 24,
+                    //       fontWeight: FontWeight.bold),
+                    // ),
                     SizedBox(height: 8), //space between texts
                     Text(DateFormat.yMMMMd('en_US').format(DateTime.now()),
                         style: TextStyle(
@@ -70,21 +97,50 @@ class _HomePageState extends State<HomePage> {
           //how do you feel
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Your next collection is:',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20)),
-                // Icon(Icons.more_horiz, color: Colors.white)
-                Text(DateFormat.yMMMMd('en_US').format(DateTime.now()),
-                    style: TextStyle(
-                        color: Colors.white,
-                        // fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-              ],
+            child:
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                FutureBuilder<DocumentSnapshot>(
+              future: users.doc(userId).get(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<DocumentSnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text("Something went wrong");
+                }
+                if (snapshot.connectionState == ConnectionState.done) {
+                  Map<String, dynamic> data =
+                      snapshot.data!.data() as Map<String, dynamic>;
+                  return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Your next collection is',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                        Text(
+                          DateFormat.yMMMMd('en_US')
+                              .format(data['date'].toDate()),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        )
+                      ]
+
+                      // "Hi ${data['fullName']}",
+                      // style: TextStyle(
+                      //     color: Colors.white,
+                      //     fontSize: 24,
+                      //     fontWeight: FontWeight.bold),
+                      );
+                }
+
+                return Text("loading");
+              },
             ),
           ),
 
@@ -114,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
-                        Icon(Icons.more_horiz),
+                        Icon(Icons.people),
                       ],
                     ),
                     SizedBox(height: 20),
@@ -124,21 +180,164 @@ class _HomePageState extends State<HomePage> {
                     Expanded(
                       child: ListView(
                         children: [
-                          ExerciseTitle(
-                              exerciseTitle: 'Bins available',
-                              //,,
-                              icon: Icons.numbers_outlined,
-                              number: 5),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: ListTile(
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Container(
+                                      padding: EdgeInsets.all(6),
+                                      color: Colors.orange,
+                                      child: Icon(Icons.numbers_outlined,
+                                          size: 25, color: Colors.white)),
+                                ),
+                                title: Text('Bins available',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                                subtitle: Text('From IOT'),
+                              ),
+                            ),
+                          ),
+                          // WasteTile(
+                          //   dataTitle: 'Bins available',
+                          //   //,,
+                          //   icon: Icons.numbers_outlined,
+                          //   number: 1,
+                          // ),
                           SizedBox(height: 5),
-                          ExerciseTitle(
-                              exerciseTitle: 'Current bin level',
-                              icon: Icons.transform_sharp,
-                              number: 16),
+                          // WasteTile(
+                          //     dataTitle: 'Current bin level',
+                          //     icon: Icons.height,
+                          //     number: 16),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: ListTile(
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Container(
+                                      padding: EdgeInsets.all(6),
+                                      color: Colors.orange,
+                                      child: Icon(Icons.height,
+                                          size: 25, color: Colors.white)),
+                                ),
+                                title: Text('Current bin level',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                                subtitle: Text('From IOT'),
+                              ),
+                            ),
+                          ),
+
                           SizedBox(height: 5),
-                          ExerciseTitle(
-                              exerciseTitle: 'Bin location',
-                              icon: Icons.location_city,
-                              number: 34),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: ListTile(
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Container(
+                                      padding: EdgeInsets.all(6),
+                                      color: Colors.orange,
+                                      child: Icon(Icons.location_city,
+                                          size: 25, color: Colors.white)),
+                                ),
+                                title: Text('Bin location',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                                subtitle: FutureBuilder<DocumentSnapshot>(
+                                  future: users.doc(userId).get(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<DocumentSnapshot>
+                                          snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Text("Something went wrong");
+                                    }
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      Map<String, dynamic> data = snapshot.data!
+                                          .data() as Map<String, dynamic>;
+                                      return Text(
+                                        data['location'].toString(),
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      );
+                                    }
+
+                                    return Text("loading");
+                                  },
+                                ),
+                                // trailing: Icon(Icons.more_horiz),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: ListTile(
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Container(
+                                      padding: EdgeInsets.all(6),
+                                      color: Colors.orange,
+                                      child: Icon(Icons.location_city,
+                                          size: 25, color: Colors.white)),
+                                ),
+                                title: Text('Apartment',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                                subtitle: FutureBuilder<DocumentSnapshot>(
+                                  future: users.doc(userId).get(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<DocumentSnapshot>
+                                          snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Text("Something went wrong");
+                                    }
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      Map<String, dynamic> data = snapshot.data!
+                                          .data() as Map<String, dynamic>;
+                                      return Text(
+                                        data['apartment'].toString(),
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      );
+                                    }
+
+                                    return Text("loading");
+                                  },
+                                ),
+                                // trailing: Icon(Icons.more_horiz),
+                              ),
+                            ),
+                          ),
                           SizedBox(height: 5),
                         ],
                       ),
@@ -206,9 +405,18 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.message), label: 'Message'),
+                icon: Icon(Icons.people), label: 'Collectors'),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ]),
     );
   }
+
+  // _fetchUserData() async {
+  //   final user = await FirebaseAuth.instance.currentUser;
+  //   if (user != null) {
+  //     await FirebaseFirestore.instance.collection('users').doc(user.uid).get().then((ds) {
+  //       userEmail = ds.data('name')
+  //     });
+  //   }
+  // }
 }

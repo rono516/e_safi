@@ -47,6 +47,9 @@ class _HomePageState extends State<HomePage> {
                       future: users.doc(userId).get(),
                       builder: (BuildContext context,
                           AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        if (snapshot.data == null) {
+                          return Text('Please register');
+                        }
                         if (snapshot.hasError) {
                           return Text("Something went wrong");
                         }
@@ -104,6 +107,9 @@ class _HomePageState extends State<HomePage> {
               future: users.doc(userId).get(),
               builder: (BuildContext context,
                   AsyncSnapshot<DocumentSnapshot> snapshot) {
+                if (snapshot.data == null) {
+                  return Text('Please register');
+                }
                 if (snapshot.hasError) {
                   return Text("Something went wrong");
                 }
@@ -128,14 +134,7 @@ class _HomePageState extends State<HomePage> {
                               fontWeight: FontWeight.bold,
                               fontSize: 18),
                         )
-                      ]
-
-                      // "Hi ${data['fullName']}",
-                      // style: TextStyle(
-                      //     color: Colors.white,
-                      //     fontSize: 24,
-                      //     fontWeight: FontWeight.bold),
-                      );
+                      ]);
                 }
 
                 return Text("loading");
@@ -203,17 +202,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-                          // WasteTile(
-                          //   dataTitle: 'Bins available',
-                          //   //,,
-                          //   icon: Icons.numbers_outlined,
-                          //   number: 1,
-                          // ),
                           SizedBox(height: 5),
-                          // WasteTile(
-                          //     dataTitle: 'Current bin level',
-                          //     icon: Icons.height,
-                          //     number: 16),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 8.0),
                             child: Container(
@@ -238,7 +227,6 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-
                           SizedBox(height: 5),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 8.0),
@@ -265,6 +253,9 @@ class _HomePageState extends State<HomePage> {
                                   builder: (BuildContext context,
                                       AsyncSnapshot<DocumentSnapshot>
                                           snapshot) {
+                                    if (snapshot.data == null) {
+                                      return Text('Please register');
+                                    }
                                     if (snapshot.hasError) {
                                       return Text("Something went wrong");
                                     }
@@ -314,6 +305,9 @@ class _HomePageState extends State<HomePage> {
                                   builder: (BuildContext context,
                                       AsyncSnapshot<DocumentSnapshot>
                                           snapshot) {
+                                    if (snapshot.data == null) {
+                                      return Text('Please register');
+                                    }
                                     if (snapshot.hasError) {
                                       return Text("Something went wrong");
                                     }

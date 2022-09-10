@@ -1,50 +1,26 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wasteapp/pages/main_screen.dart';
 
 import '../widgets/exercise_title.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
   static const routeName = '/profile_page';
 
   @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  String userId = FirebaseAuth.instance.currentUser!.uid;
+  @override
   Widget build(BuildContext context) {
-    return
-        // Scaffold(
-        //   drawer: const MainDrawer(),
-        //   backgroundColor: Colors.green,
-        //   body: SafeArea(
-        //     child: Padding(
-        //       padding: const EdgeInsets.all(15.0),
-        //       child: Column(
-        //         crossAxisAlignment: CrossAxisAlignment.start,
-        //         // ignore: prefer_const_constructors
-        //         children: [
-        //           Text(
-        //             'User Profiles',
-        //             style: TextStyle(
-        //               color: Colors.grey[300],
-        //               fontWeight: FontWeight.bold,
-        //               fontSize: 20,
-        //             ),
-        //           ),
-        //           Text('Name',
-        //               style: TextStyle(color: Colors.grey[300], fontSize: 20)),
-        //           Text('Email',
-        //               style: TextStyle(color: Colors.grey[300], fontSize: 20)),
-        //           TextButton(
-        //               onPressed: signOut,
-        //               child: Text('Logout',
-        //                   style: TextStyle(color: Colors.grey[300], fontSize: 20)))
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // );
-        Scaffold(
+    return Scaffold(
       backgroundColor: Colors.green[800],
       body: SafeArea(
         child: Column(children: [
@@ -58,7 +34,6 @@ class ProfilePage extends StatelessWidget {
               child: Center(
                 child: Column(
                   children: [
-                    //exercise heading
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -67,7 +42,6 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 25),
                         ),
-                        // Icon(Icons.home, color: Colors.green),
                         IconButton(
                             onPressed: () {},
                             icon: Icon(
@@ -79,11 +53,12 @@ class ProfilePage extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
 
-                    //ListView of exercises
+                    //user data
                     Expanded(
                       child: ListView(
                         children: [
                           Padding(
+                            //Name
                             padding: const EdgeInsets.only(bottom: 8.0),
                             child: Container(
                               decoration: BoxDecoration(
@@ -103,16 +78,39 @@ class ProfilePage extends StatelessWidget {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16)),
-                                subtitle: Text(
-                                  'Exercises',
-                                  style: TextStyle(color: Colors.grey),
+                                subtitle: FutureBuilder<DocumentSnapshot>(
+                                  future: users.doc(userId).get(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<DocumentSnapshot>
+                                          snapshot) {
+                                    if (snapshot.data == null) {
+                                      return Text('Please register');
+                                    }
+                                    if (snapshot.hasError) {
+                                      return Text("Something went wrong");
+                                    }
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      Map<String, dynamic> data = snapshot.data!
+                                          .data() as Map<String, dynamic>;
+                                      return Text(
+                                        data['fullName'],
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      );
+                                    }
+
+                                    return Text("loading");
+                                  },
                                 ),
-                                // trailing: Icon(Icons.more_horiz),
                               ),
                             ),
                           ),
                           SizedBox(height: 5),
                           Padding(
+                            //Email
                             padding: const EdgeInsets.only(bottom: 8.0),
                             child: Container(
                               decoration: BoxDecoration(
@@ -132,11 +130,33 @@ class ProfilePage extends StatelessWidget {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16)),
-                                subtitle: Text(
-                                  'Email',
-                                  style: TextStyle(color: Colors.grey),
+                                subtitle: FutureBuilder<DocumentSnapshot>(
+                                  future: users.doc(userId).get(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<DocumentSnapshot>
+                                          snapshot) {
+                                    if (snapshot.data == null) {
+                                      return Text('Please register');
+                                    }
+                                    if (snapshot.hasError) {
+                                      return Text("Something went wrong");
+                                    }
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      Map<String, dynamic> data = snapshot.data!
+                                          .data() as Map<String, dynamic>;
+                                      return Text(
+                                        data['email'],
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      );
+                                    }
+
+                                    return Text("loading");
+                                  },
                                 ),
-                                // trailing: Icon(Icons.more_horiz),
                               ),
                             ),
                           ),
@@ -149,6 +169,7 @@ class ProfilePage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: ListTile(
+                                onTap: signOut,
                                 leading: ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
                                   child: Container(
@@ -173,36 +194,6 @@ class ProfilePage extends StatelessWidget {
                         ],
                       ),
                     ),
-
-                    // Container(
-                    //   decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(8),
-                    //       color: Colors.green),
-                    //   width: double.infinity,
-                    //   child: TextButton(
-                    //     onPressed: () {
-                    //       startTransaction(amount: 10.0, phone: "254792009556");
-                    //     },
-                    //     child: Text(
-                    //       'Pay Now',
-                    //       style: TextStyle(color: Colors.white),
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(height: 10),
-                    // TextButton(
-                    //     onPressed: () {
-                    //       startCheckout(userPhone: "254792009556", amount: 10);
-                    //     },
-                    //     child: Text(
-                    //       'Pay Now',
-                    //       style: TextStyle(color: Colors.green),
-                    //     ))
-                    // FloatingActionButton(
-                    //     onPressed: () {
-                    //       startTransaction(amount: 10.0, phone: "254792009556");
-                    //     },
-                    //     child: Text('Pay Now')),
                   ],
                 ),
               ),

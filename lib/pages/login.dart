@@ -241,7 +241,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void signIn(String email, String password) async {
+  signIn(String email, String password) async {
     if (_formkey.currentState!.validate()) {
       try {
         // await FirebaseAuth.instance
@@ -263,9 +263,13 @@ class _LoginPageState extends State<LoginPage> {
         );
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
-          print('No user found for that email.');
+          return 'No user found for that email';
+          //  print('No user found for that email.');
         } else if (e.code == 'wrong-password') {
-          print('Wrong password provided for that user.');
+          return Text("Wrong password provided for that user");
+          //print('Wrong password provided for that user.');
+        } else {
+          return 'Cannot log in';
         }
       }
     }

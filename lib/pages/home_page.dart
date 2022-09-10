@@ -2,12 +2,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wasteapp/pages/collectors_page.dart';
 import 'package:wasteapp/pages/main_screen.dart';
-import 'package:wasteapp/pages/message_page.dart';
 import 'package:wasteapp/pages/profile_page.dart';
 import 'package:wasteapp/widgets/drawer.dart';
 import 'collection_page.dart';
-import '../widgets/exercise_title.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
@@ -390,7 +389,7 @@ class BottomNavigationPage extends StatefulWidget {
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
   int currentIndex = 0;
-  final _pages = [HomePage(), MessagePage(), ProfilePage()];
+  final _pages = [HomePage(), CollectorsPage(), ProfilePage()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

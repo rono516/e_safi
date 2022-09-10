@@ -5,10 +5,7 @@ import 'package:wasteapp/pages/collection_page.dart';
 import 'package:wasteapp/pages/login.dart';
 import 'package:wasteapp/pages/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-// import 'pages/auth_page.dart';
 import 'package:mpesa_flutter_plugin/mpesa_flutter_plugin.dart';
-
-// void main() => runApp(MyApp());
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

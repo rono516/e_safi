@@ -26,9 +26,9 @@ class _ForgotpassState extends State<Forgotpass> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                color: Colors.blue[900],
+                color: Colors.green[800],
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.70,
+                height: MediaQuery.of(context).size.height,
                 child: Center(
                   child: Container(
                     margin: EdgeInsets.all(12),
@@ -40,15 +40,15 @@ class _ForgotpassState extends State<Forgotpass> {
                         children: [
                           Text(
                             "Forgot\n"
-                            "Password",
+                            "Password?",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
-                              fontSize: 50,
+                              fontSize: 40,
                             ),
                           ),
                           Text(
-                            "Dont worry...",
+                            "Enter email to reset.",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -164,42 +164,42 @@ class _ForgotpassState extends State<Forgotpass> {
                   ),
                 ),
               ),
-              Container(
-                color: Colors.white,
-                width: MediaQuery.of(context).size.width,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Text(
-                        "Made by",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "WEBFUN",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                          color: Colors.yellowAccent[400],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Container(
+              //   color: Colors.white,
+              //   width: MediaQuery.of(context).size.width,
+              //   child: Center(
+              //     child: Column(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       children: [
+              //         SizedBox(
+              //           height: 10,
+              //         ),
+              //         SizedBox(
+              //           height: 40,
+              //         ),
+              //         Text(
+              //           "Made by",
+              //           style: TextStyle(
+              //             fontWeight: FontWeight.bold,
+              //             fontSize: 20,
+              //           ),
+              //         ),
+              //         SizedBox(
+              //           height: 5,
+              //         ),
+              //         Text(
+              //           "WEBFUN",
+              //           style: TextStyle(
+              //             fontWeight: FontWeight.bold,
+              //             fontSize: 30,
+              //             color: Colors.yellowAccent[400],
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

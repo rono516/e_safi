@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wasteapp/pages/collection_register.dart';
+import 'package:wasteapp/pages/collector_register_page.dart';
+import 'package:wasteapp/pages/main_screen.dart';
 import '../models/user_model.dart';
 import 'login.dart';
 
@@ -307,34 +309,6 @@ class _RegisterState extends State<Register> {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) => {postDetailsToFirestore(email, rool)})
-          //     .then((value) {
-          //   return StreamBuilder<User?>(
-          //       stream: FirebaseAuth.instance.authStateChanges(),
-          //       builder: ((context, snapshot) {
-          //         if (snapshot.hasData && snapshot.data != null) {
-          //           return StreamBuilder(
-          //               stream: FirebaseFirestore.instance
-          //                   .collection("users")
-          //                   .doc(snapshot.data!.uid)
-          //                   .snapshots(),
-          //               builder: (BuildContext context,
-          //                   AsyncSnapshot<DocumentSnapshot> snapshot) {
-          //                 if (snapshot.hasData && snapshot.data != null) {
-          //                   final user = snapshot.data!;
-          //                   if (user['wrool'] == 'Collector') {
-          //                     return CollectorPgae();
-          //                   } else {
-          //                     return CollectionRegister();
-          //                   }
-          //                 }
-          //                 return Material(
-          //                   child: Center(child: CircularProgressIndicator()),
-          //                 );
-          //               });
-          //         }
-          //         return HomePage();
-          //       }));
-          // })
           .catchError((e) {});
     }
   }
@@ -350,10 +324,40 @@ class _RegisterState extends State<Register> {
         .collection("users")
         .doc(user.uid)
         .set(userModel.toMap());
-
     Navigator.pushReplacement(
-        // context, MaterialPageRoute(builder: (context) => LoginPage()));
-        context,
-        MaterialPageRoute(builder: (context) => CollectionRegister()));
+        context, MaterialPageRoute(builder: (context) => MainScreen()));
+    // registerRedirect();
+    //   .then((value) {
+    // registerRedirect()
+  }
+
+  registerRedirect() {
+    return StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: ((context, snapshot) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(snapshot.data!.uid)
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  if (snapshot.hasData && snapshot.data != null) {
+                    final user = snapshot.data!;
+                    if (user['wrool'] == 'Collector') {
+                      return CollectorRegister();
+                    } else if (user['wrool'] == 'Tenant') {
+                      //return HomePage();
+                      return CollectionRegister();
+                    }
+                  }
+                  return Material(
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                });
+          }
+          return LoginPage();
+        }));
   }
 }

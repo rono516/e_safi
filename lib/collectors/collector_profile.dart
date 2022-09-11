@@ -1,21 +1,19 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:wasteapp/pages/main_screen.dart';
 
-import '../widgets/exercise_title.dart';
+import '../pages/main_screen.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
-  static const routeName = '/profile_page';
+class CollectorProfile extends StatefulWidget {
+  const CollectorProfile({Key? key}) : super(key: key);
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<CollectorProfile> createState() => _CollectorProfileState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _CollectorProfileState extends State<CollectorProfile> {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   String userId = FirebaseAuth.instance.currentUser!.uid;
   @override
@@ -57,61 +55,61 @@ class _ProfilePageState extends State<ProfilePage> {
                     Expanded(
                       child: ListView(
                         children: [
-                          Padding(
-                            //Name
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: ListTile(
-                                leading: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Container(
-                                      padding: EdgeInsets.all(6),
-                                      color: Colors.orange,
-                                      child: Icon(Icons.person,
-                                          size: 25, color: Colors.white)),
-                                ),
-                                title: Text('Name',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16)),
-                                subtitle: FutureBuilder<DocumentSnapshot>(
-                                  future: users.doc(userId).get(),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<DocumentSnapshot>
-                                          snapshot) {
-                                    if (snapshot.data == null) {
-                                      return Text('Please register');
-                                    }
-                                    if (snapshot.hasError) {
-                                      return Text("Something went wrong");
-                                    }
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.done) {
-                                      Map<String, dynamic> data = snapshot.data!
-                                          .data() as Map<String, dynamic>;
-                                      if (data['fullName'] == null) {
-                                        return Text('Please register');
-                                      }
-                                      return Text(
-                                        data['fullName'],
-                                        style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      );
-                                    }
+                          // Padding(
+                          //   //Name
+                          //   padding: const EdgeInsets.only(bottom: 8.0),
+                          //   child: Container(
+                          //     decoration: BoxDecoration(
+                          //       color: Colors.white,
+                          //       borderRadius: BorderRadius.circular(16),
+                          //     ),
+                          //     child: ListTile(
+                          //       leading: ClipRRect(
+                          //         borderRadius: BorderRadius.circular(12),
+                          //         child: Container(
+                          //             padding: EdgeInsets.all(6),
+                          //             color: Colors.orange,
+                          //             child: Icon(Icons.person,
+                          //                 size: 25, color: Colors.white)),
+                          //       ),
+                          //       title: Text('Name',
+                          //           style: TextStyle(
+                          //               fontWeight: FontWeight.bold,
+                          //               fontSize: 16)),
+                          //       subtitle: FutureBuilder<DocumentSnapshot>(
+                          //         future: users.doc(userId).get(),
+                          //         builder: (BuildContext context,
+                          //             AsyncSnapshot<DocumentSnapshot>
+                          //                 snapshot) {
+                          //           if (snapshot.data == null) {
+                          //             return Text('Please register');
+                          //           }
+                          //           if (snapshot.hasError) {
+                          //             return Text("Something went wrong");
+                          //           }
+                          //           if (snapshot.connectionState ==
+                          //               ConnectionState.done) {
+                          //             Map<String, dynamic> data = snapshot.data!
+                          //                 .data() as Map<String, dynamic>;
+                          //             if (data['fullName'] == null) {
+                          //               return Text('Please register');
+                          //             }
+                          //             return Text(
+                          //               data['fullName'],
+                          //               style: TextStyle(
+                          //                   color: Colors.grey,
+                          //                   fontSize: 16,
+                          //                   fontWeight: FontWeight.bold),
+                          //             );
+                          //           }
 
-                                    return Text("loading");
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
+                          //           return Text("loading");
+                          //         },
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // SizedBox(height: 5),
                           Padding(
                             //Email
                             padding: const EdgeInsets.only(bottom: 8.0),
@@ -153,6 +151,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       }
                                       return Text(
                                         data['email'],
+                                        // 'Email',
                                         style: TextStyle(
                                             color: Colors.grey,
                                             fontSize: 16,

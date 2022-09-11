@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wasteapp/collectors/collector_page.dart';
+import 'package:wasteapp/collectors/collector_home_page.dart';
 import 'package:wasteapp/pages/home_page.dart';
 import 'package:wasteapp/pages/login.dart';
 
@@ -27,8 +27,9 @@ class MainScreen extends StatelessWidget {
                     AsyncSnapshot<DocumentSnapshot> snapshot) {
                   if (snapshot.hasData && snapshot.data != null) {
                     final user = snapshot.data!;
+
                     if (user['wrool'] == 'Collector') {
-                      return CollectorPgae();
+                      return CollectorBottomNavigationPage();
                     } else if (user['wrool'] == 'Tenant') {
                       //return HomePage();
                       return BottomNavigationPage();

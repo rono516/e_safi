@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
+import 'package:wasteapp/collectors/collector_initiate.dart';
 import 'package:wasteapp/mpesakeys/keys.dart';
 import 'package:wasteapp/pages/collection_page.dart';
 import 'package:wasteapp/pages/login.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         CollectionPage.routeName: (context) => CollectionPage(),
         LoginPage.routeName: (context) => LoginPage(),
         MainScreen.routeName: (context) => MainScreen(),
+        CollectorInitiate.routeName: (context) => CollectorInitiate()
       },
     );
   }

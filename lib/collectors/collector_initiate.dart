@@ -1,29 +1,27 @@
-// ignore_for_file: prefer_const_constructors, unused_field, prefer_final_fields
+// ignore_for_file: prefer_const_constructors
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-// import '../widgets/exercise_title.dart';
 import 'package:intl/intl.dart';
-import 'package:wasteapp/models/user_model.dart';
-import 'package:wasteapp/pages/home_page.dart';
-import 'dart:core';
+import 'package:wasteapp/collectors/collector_home_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:wasteapp/values/height.dart';
+import '../models/user_model.dart';
+import '../values/height.dart';
 
-class CollectionRegister extends StatefulWidget {
-  const CollectionRegister({Key? key}) : super(key: key);
+class CollectorInitiate extends StatefulWidget {
+  const CollectorInitiate({Key? key}) : super(key: key);
+  static const routeName = '/collector-initiate';
 
   @override
-  State<CollectionRegister> createState() => _CollectionRegisterState();
+  State<CollectorInitiate> createState() => _CollectorInitiateState();
 }
 
-class _CollectionRegisterState extends State<CollectionRegister> {
+class _CollectorInitiateState extends State<CollectorInitiate> {
   final _numberFocusNode = FocusNode();
   final _locationFocusNode = FocusNode();
-  final _apartmentFocusNode = FocusNode();
-  final _housesFocusNode = FocusNode();
+  // final _apartmentFocusNode = FocusNode();
+  //final _housesFocusNode = FocusNode();
   //final _dateFocusNode = FocusNode();
   TextEditingController dateController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -32,7 +30,7 @@ class _CollectionRegisterState extends State<CollectionRegister> {
   User? user = FirebaseAuth.instance.currentUser;
   late String userId = user!.uid;
   late String? userEmail = user!.email;
-  final String role = 'Tenant';
+  final String role = 'Collector';
 
   // var _userData = userModel.email = user.email
 
@@ -52,14 +50,17 @@ class _CollectionRegisterState extends State<CollectionRegister> {
   void dispose() {
     _numberFocusNode.dispose();
     _locationFocusNode.dispose();
-    _apartmentFocusNode.dispose();
-    _housesFocusNode.dispose();
+    //_apartmentFocusNode.dispose();
+    // _housesFocusNode.dispose();
 
     super.dispose();
   }
 
   void _saveForm() async {
     _formKey.currentState!.save();
+
+    // print(_userData.number);
+    // print(_userData.date);
 
     try {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -71,8 +72,8 @@ class _CollectionRegisterState extends State<CollectionRegister> {
       userModel.fullName = _userData.fullName;
       userModel.number = _userData.number;
       userModel.location = _userData.location;
-      userModel.apartment = _userData.apartment;
-      userModel.houses = _userData.houses;
+      // userModel.apartment = _userData.apartment;
+      //userModel.houses = _userData.houses;
       userModel.date = _userData.date;
       // userModel.wrool = rool;
       await firebaseFirestore
@@ -107,7 +108,7 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                       // ignore: prefer_const_literals_to_create_immutables
                       children: [
                         Text(
-                          'SignUp for waste collection',
+                          'Collector Initiate collection',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
@@ -119,7 +120,7 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              BottomNavigationPage()));
+                                              CollectorBottomNavigationPage()));
                                 },
                                 icon: Icon(Icons.home, color: Colors.green))),
                       ],
@@ -196,10 +197,10 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                               SizedBox(height: sizedboxheight),
                               TextFormField(
                                 textInputAction: TextInputAction.next,
-                                onFieldSubmitted: (_) {
-                                  FocusScope.of(context)
-                                      .requestFocus(_apartmentFocusNode);
-                                },
+                                // onFieldSubmitted: (_) {
+                                //   FocusScope.of(context)
+                                //       .requestFocus(_apartmentFocusNode);
+                                // },
                                 focusNode: _locationFocusNode,
                                 decoration: InputDecoration(
                                     labelText: 'Location',
@@ -215,71 +216,73 @@ class _CollectionRegisterState extends State<CollectionRegister> {
                                     fullName: _userData.fullName,
                                     number: _userData.number,
                                     location: value,
-                                    apartment: _userData.apartment,
-                                    houses: _userData.houses,
+                                    apartment: null,
+                                    houses: null,
                                     date: _userData.date,
                                   );
                                 },
                               ),
-                              SizedBox(height: sizedboxheight),
-                              TextFormField(
-                                //  controller: apartmentController,
-                                textInputAction: TextInputAction.next,
-                                onFieldSubmitted: (_) {
-                                  FocusScope.of(context)
-                                      .requestFocus(_housesFocusNode);
-                                },
-                                focusNode: _apartmentFocusNode,
-                                decoration: InputDecoration(
-                                  hintText: 'Enter apartment',
-                                  labelText: 'Apartment',
-                                  fillColor: Colors.white,
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Enter your apartment';
-                                  }
-                                  if (int.parse(value) <= 0) {
-                                    return 'Enter a number greater than zero';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  _userData = UserModel(
-                                    fullName: _userData.fullName,
-                                    number: _userData.number,
-                                    location: _userData.location,
-                                    apartment: value.toString(),
-                                    houses: _userData.houses,
-                                    date: _userData.date,
-                                  );
-                                },
-                              ),
-                              SizedBox(height: sizedboxheight),
-                              TextFormField(
-                                textInputAction: TextInputAction.next,
-                                focusNode: _housesFocusNode,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                    labelText: 'Number of houses',
-                                    hintText: 'No of houses'),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Enter number of houses';
-                                  }
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  _userData = UserModel(
-                                    fullName: _userData.fullName,
-                                    number: _userData.number,
-                                    location: _userData.location,
-                                    apartment: _userData.apartment,
-                                    houses: int.parse(value!),
-                                    date: _userData.date,
-                                  );
-                                },
-                              ),
+                              //Apartment
+                              // SizedBox(height: sizedboxheight),
+                              // TextFormField(
+                              //   //  controller: apartmentController,
+                              //   textInputAction: TextInputAction.next,
+                              //   onFieldSubmitted: (_) {
+                              //     FocusScope.of(context)
+                              //         .requestFocus(_housesFocusNode);
+                              //   },
+                              //   focusNode: _apartmentFocusNode,
+                              //   decoration: InputDecoration(
+                              //     hintText: 'Enter apartment',
+                              //     labelText: 'Apartment',
+                              //     fillColor: Colors.white,
+                              //   ),
+                              //   validator: (value) {
+                              //     if (value!.isEmpty) {
+                              //       return 'Enter your apartment';
+                              //     }
+                              //     if (int.parse(value) <= 0) {
+                              //       return 'Enter a number greater than zero';
+                              //     }
+                              //     return null;
+                              //   },
+                              //   onSaved: (value) {
+                              //     _userData = UserModel(
+                              //       fullName: _userData.fullName,
+                              //       number: _userData.number,
+                              //       location: _userData.location,
+                              //       apartment: value.toString(),
+                              //       houses: _userData.houses,
+                              //       date: _userData.date,
+                              //     );
+                              //   },
+                              // ),
+                              //Number of houses
+                              // SizedBox(height: sizedboxheight),
+                              // TextFormField(
+                              //   textInputAction: TextInputAction.next,
+                              //   focusNode: _housesFocusNode,
+                              //   keyboardType: TextInputType.number,
+                              //   decoration: InputDecoration(
+                              //       labelText: 'Number of houses',
+                              //       hintText: 'No of houses'),
+                              //   validator: (value) {
+                              //     if (value!.isEmpty) {
+                              //       return 'Enter number of houses';
+                              //     }
+                              //     return null;
+                              //   },
+                              //   onSaved: (value) {
+                              //     _userData = UserModel(
+                              //       fullName: _userData.fullName,
+                              //       number: _userData.number,
+                              //       location: _userData.location,
+                              //       apartment: _userData.apartment,
+                              //       houses: int.parse(value!),
+                              //       date: _userData.date,
+                              //     );
+                              //   },
+                              // ),
                               SizedBox(height: sizedboxheight),
                               TextFormField(
                                 controller: dateController,

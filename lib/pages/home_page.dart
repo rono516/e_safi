@@ -56,6 +56,15 @@ class _HomePageState extends State<HomePage> {
                         if (snapshot.connectionState == ConnectionState.done) {
                           Map<String, dynamic> data =
                               snapshot.data!.data() as Map<String, dynamic>;
+                          if (data['fullName'] == null) {
+                            return Text(
+                              'Welcome to Esafi',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold),
+                            );
+                          }
                           return Text(
                             "Hi! ${data['fullName']}",
                             style: TextStyle(
@@ -113,9 +122,19 @@ class _HomePageState extends State<HomePage> {
                 if (snapshot.hasError) {
                   return Text("Something went wrong");
                 }
+
                 if (snapshot.connectionState == ConnectionState.done) {
                   Map<String, dynamic> data =
                       snapshot.data!.data() as Map<String, dynamic>;
+                  if (data['date'] == null) {
+                    return Text(
+                      'Please register for waste collection ',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    );
+                  }
                   return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

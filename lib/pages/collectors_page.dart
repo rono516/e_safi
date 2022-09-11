@@ -1,8 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/exercise_title.dart';
 
 class CollectorsPage extends StatefulWidget {
   const CollectorsPage({Key? key}) : super(key: key);
@@ -50,67 +49,88 @@ class _CollectorsPageState extends State<CollectorsPage> {
                       child: ListView(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: ListTile(
-                                leading: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Container(
-                                      padding: EdgeInsets.all(6),
-                                      color: Colors.orange,
-                                      child: Icon(Icons.person,
-                                          size: 25, color: Colors.white)),
-                                ),
-                                title: Text('Location',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16)),
-                                subtitle: Text(
-                                  'Phone Number',
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                                trailing: Icon(Icons.message),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collection("users")
+                                      .where("wrool", isEqualTo: "Collector")
+                                      .snapshots(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                    if (snapshot.hasData &&
+                                        snapshot.data != null) {
+                                      final collectors = snapshot.data!.docs;
+                                      return ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: collectors.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return Container(
+                                              margin: EdgeInsets.only(top: 5),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(16),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  ListTile(
+                                                    leading: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                      child: Container(
+                                                          padding:
+                                                              EdgeInsets.all(6),
+                                                          color: Colors.orange,
+                                                          child: Icon(
+                                                              Icons.person,
+                                                              size: 25,
+                                                              color: Colors
+                                                                  .white)),
+                                                    ),
+                                                    isThreeLine: true,
+                                                    title: Text(
+                                                        //should be location
+                                                        collectors[index]
+                                                                ['location'] ??
+                                                            '''
+                                                            Email: ${collectors[index]['email']}
+                                                             Location: Not collecting
+                                                               ''',
+                                                        // 'Location',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 16)),
+                                                    subtitle: Text(
+                                                      //should be phone number
+                                                      collectors[index]
+                                                              ['number'] ??
+                                                          'Number: Not reachable',
+                                                      style: TextStyle(
+                                                          color: Colors.grey),
+                                                    ),
+                                                    trailing:
+                                                        Icon(Icons.message),
+                                                  ),
+                                                  SizedBox(height: 5),
+                                                  Divider(height: 10)
+                                                ],
+                                              ),
+
+                                              // SizedBox(height: 15),
+                                            );
+                                          });
+                                    }
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  })),
+                          SizedBox(height: 15),
                         ],
                       ),
                     ),
-
-                    // Container(
-                    //   decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(8),
-                    //       color: Colors.green),
-                    //   width: double.infinity,
-                    //   child: TextButton(
-                    //     onPressed: () {
-                    //       startTransaction(amount: 10.0, phone: "254792009556");
-                    //     },
-                    //     child: Text(
-                    //       'Pay Now',
-                    //       style: TextStyle(color: Colors.white),
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(height: 10),
-                    // TextButton(
-                    //     onPressed: () {
-                    //       startCheckout(userPhone: "254792009556", amount: 10);
-                    //     },
-                    //     child: Text(
-                    //       'Pay Now',
-                    //       style: TextStyle(color: Colors.green),
-                    //     ))
-                    // FloatingActionButton(
-                    //     onPressed: () {
-                    //       startTransaction(amount: 10.0, phone: "254792009556");
-                    //     },
-                    //     child: Text('Pay Now')),
                   ],
                 ),
               ),

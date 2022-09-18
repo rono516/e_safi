@@ -2,12 +2,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wasteapp/models/channel.dart';
+import 'package:wasteapp/pages/bin_data_view.dart';
 import 'package:wasteapp/pages/collectors_page.dart';
 import 'package:wasteapp/pages/main_screen.dart';
 import 'package:wasteapp/pages/profile_page.dart';
 import 'package:wasteapp/widgets/drawer.dart';
 import 'collection_page.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -187,7 +190,17 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
-                        Icon(Icons.people),
+                        // Icon(Icons.people),
+                        IconButton(
+                            onPressed: () {
+                              // Navigator.of(context).pushNamed(Collection);
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                    builder: (context) => BinDataView(),
+                                  ));
+                            },
+                            icon: Icon(Icons.remove_red_eye))
                       ],
                     ),
                     SizedBox(height: 20),
@@ -217,7 +230,7 @@ class _HomePageState extends State<HomePage> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16)),
-                                subtitle: Text('From IOT'),
+                                subtitle: Text('1'),
                               ),
                             ),
                           ),
@@ -242,7 +255,23 @@ class _HomePageState extends State<HomePage> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16)),
-                                subtitle: Text('From IOT'),
+                                subtitle:
+                                    //Text('From IOT'),
+                                    FutureBuilder(
+                                        future: getSensorData(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot snapshot) {
+                                          if (snapshot.data == null) {
+                                            return Text(
+                                                'Not connected to a bin');
+                                          }
+                                          return Text(
+                                            int.parse(snapshot.data) > 200
+                                                ? 'Waste level is ${snapshot.data}'
+                                                : 'Waste level is ${snapshot.data} . Please check',
+                                            style: TextStyle(color: Colors.red),
+                                          );
+                                        }),
                               ),
                             ),
                           ),
@@ -381,6 +410,22 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  getSensorData() async {
+    var url =
+        "https://api.thingspeak.com/channels/1861455/feeds.json?api_key=CACC19YOE9ZU2AOQ&results=2";
+    var response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      Channel channelData = channelFromMap(response.body);
+
+      List<Feed> feedData = channelData.feeds;
+
+      return feedData[1].field1;
+    } else {
+      throw Exception("failed to fetch data from thingspeak");
+    }
+  }
 }
 
 Future<void> signOut() async {
@@ -430,5 +475,9 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   //       userEmail = ds.data('name')
   //     });
   //   }
+  // }
+
+  // void getSensorData() async {
+
   // }
 }

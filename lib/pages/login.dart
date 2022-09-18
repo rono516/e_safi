@@ -142,13 +142,19 @@ class _LoginPageState extends State<LoginPage> {
                           keyboardType: TextInputType.emailAddress,
                         ),
                         SizedBox(height: 5),
-                        RaisedButton(
-                          color: Colors.green[900],
-                          // Colors.orange[900],
-                          textColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                              // side: BorderSide(color: Colors.black, width: 1),
-                              ),
+                        ElevatedButton(
+                          // style: ButtonStyle(backgroundColor: MaterialStateProperty(C)),
+                          // color: Colors.green[900],
+                          // // Colors.orange[900],
+                          // textColor: Colors.white,
+
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green[900],
+                            textStyle: TextStyle(color: Colors.white),
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Colors.black, width: 1),
+                            ),
+                          ),
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(

@@ -196,7 +196,7 @@ class _HomePageState extends State<HomePage> {
                               // Navigator.of(context).pushNamed(Collection);
                               Navigator.push(
                                   context,
-                                  new MaterialPageRoute(
+                                  MaterialPageRoute(
                                     builder: (context) => BinDataView(),
                                   ));
                             },

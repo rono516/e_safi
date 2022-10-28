@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wasteapp/pages/main_screen.dart';
+import 'package:wasteapp/pages/requests_page.dart';
 
 import '../widgets/exercise_title.dart';
 
@@ -163,6 +164,39 @@ class _ProfilePageState extends State<ProfilePage> {
                                     return Text("loading");
                                   },
                                 ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: ListTile(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, RequestsPage.routeName);
+                                },
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Container(
+                                      padding: EdgeInsets.all(6),
+                                      color: Colors.orange,
+                                      child: Icon(Icons.delete,
+                                          size: 25, color: Colors.white)),
+                                ),
+                                title: Text('My collection requests',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                                subtitle: Text(
+                                  '1 recent pending request',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                                // trailing: Icon(Icons.more_horiz),
                               ),
                             ),
                           ),

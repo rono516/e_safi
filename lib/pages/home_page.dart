@@ -19,8 +19,6 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 
-  //final now = DateTime.now();
-  //String formatter = DateFormat('yMd').format(DateTime.now());
   final _auth = FirebaseAuth.instance;
 }
 
@@ -80,13 +78,7 @@ class _HomePageState extends State<HomePage> {
                         return Text("loading");
                       },
                     ),
-                    // Text(
-                    //   'Hi, Collins!',
-                    //   style: TextStyle(
-                    //       color: Colors.white,
-                    //       fontSize: 24,
-                    //       fontWeight: FontWeight.bold),
-                    // ),
+
                     SizedBox(height: 8), //space between texts
                     Text(DateFormat.yMMMMd('en_US').format(DateTime.now()),
                         style: TextStyle(
@@ -106,16 +98,10 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           SizedBox(height: 20),
-          SizedBox(),
 
-          //how do you feel
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child:
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                FutureBuilder<DocumentSnapshot>(
+            child: FutureBuilder<DocumentSnapshot>(
               future: users.doc(userId).get(),
               builder: (BuildContext context,
                   AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -138,24 +124,28 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: FontWeight.bold),
                     );
                   }
-                  return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  return Column(
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      // crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Your next collection is',
+                          'Your next collection date is',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 20),
                         ),
+                        // Expanded(
+                        //   child:
                         Text(
                           DateFormat.yMMMMd('en_US')
                               .format(data['date'].toDate()),
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                              // fontWeight: FontWeight.bold,
                               fontSize: 18),
-                        )
+                        ),
+                        // )
                       ]);
                 }
 
@@ -193,7 +183,6 @@ class _HomePageState extends State<HomePage> {
                         // Icon(Icons.people),
                         IconButton(
                             onPressed: () {
-                              // Navigator.of(context).pushNamed(Collection);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -204,9 +193,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(height: 20),
-                    //fgg
 
-                    //ListView of exercises
                     Expanded(
                       child: ListView(
                         children: [
@@ -289,7 +276,7 @@ class _HomePageState extends State<HomePage> {
                                   child: Container(
                                       padding: EdgeInsets.all(6),
                                       color: Colors.orange,
-                                      child: Icon(Icons.location_city,
+                                      child: Icon(Icons.map,
                                           size: 25, color: Colors.white)),
                                 ),
                                 title: Text('Bin location',
@@ -391,7 +378,6 @@ class _HomePageState extends State<HomePage> {
                       width: double.infinity,
                       child: TextButton(
                         onPressed: () {
-                          // Navigator.of(context).pushNamed(Collection);
                           Navigator.pushNamed(
                               context, CollectionPage.routeName);
                         },
@@ -467,17 +453,4 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
           ]),
     );
   }
-
-  // _fetchUserData() async {
-  //   final user = await FirebaseAuth.instance.currentUser;
-  //   if (user != null) {
-  //     await FirebaseFirestore.instance.collection('users').doc(user.uid).get().then((ds) {
-  //       userEmail = ds.data('name')
-  //     });
-  //   }
-  // }
-
-  // void getSensorData() async {
-
-  // }
 }

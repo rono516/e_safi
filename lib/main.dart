@@ -7,6 +7,7 @@ import 'package:wasteapp/pages/login.dart';
 import 'package:wasteapp/pages/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mpesa_flutter_plugin/mpesa_flutter_plugin.dart';
+import 'package:wasteapp/pages/requests_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
         CollectionPage.routeName: (context) => CollectionPage(),
         LoginPage.routeName: (context) => LoginPage(),
         MainScreen.routeName: (context) => MainScreen(),
-        CollectorInitiate.routeName: (context) => CollectorInitiate()
+        CollectorInitiate.routeName: (context) => CollectorInitiate(),
+        RequestsPage.routeName: (context) => RequestsPage()
       },
     );
   }

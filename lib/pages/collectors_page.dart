@@ -2,6 +2,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:wasteapp/pages/collection_page.dart';
+import 'package:wasteapp/pages/requests_page.dart';
 
 class CollectorsPage extends StatefulWidget {
   const CollectorsPage({Key? key}) : super(key: key);
@@ -39,7 +41,7 @@ class _CollectorsPageState extends State<CollectorsPage> {
                         // Icon(Icons.home, color: Colors.green),
                         IconButton(
                             onPressed: () {},
-                            icon: Icon(Icons.people, color: Colors.green))
+                            icon: Icon(Icons.people, color: Colors.green[700]))
                       ],
                     ),
                     SizedBox(height: 20),
@@ -112,7 +114,17 @@ class _CollectorsPageState extends State<CollectorsPage> {
                                                           color: Colors.grey),
                                                     ),
                                                     trailing:
-                                                        Icon(Icons.message),
+                                                        // Icon(Icons.message)
+                                                        IconButton(
+                                                            color: Colors.green,
+                                                            onPressed: () {
+                                                              Navigator.pushNamed(
+                                                                  context,
+                                                                  CollectionPage
+                                                                      .routeName);
+                                                            },
+                                                            icon: Icon(
+                                                                Icons.message)),
                                                   ),
                                                   SizedBox(height: 5),
                                                   Divider(height: 10)

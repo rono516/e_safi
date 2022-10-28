@@ -1,21 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// class CollectorMessage extends StatefulWidget {
-//   const CollectorMessage({Key? key}) : super(key: key);
-
-//   @override
-//   State<CollectorMessage> createState() => _CollectorMessageState();
-// }
-
-// class _CollectorMessageState extends State<CollectorMessage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Center(
-//       child: CircularProgressIndicator(),
-//     );
-//   }
-// }
-
 // ignore_for_file: prefer_const_constructors
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,20 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:wasteapp/mpesabackend/stk_push.dart';
 
-class CollectorMessage extends StatefulWidget {
-  const CollectorMessage({Key? key}) : super(key: key);
+class RequestsPage extends StatefulWidget {
+  const RequestsPage({Key? key}) : super(key: key);
 
   static const routeName = '/requests_page';
 
   @override
-  State<CollectorMessage> createState() => _CollectorMessageState();
+  State<RequestsPage> createState() => _RequestsPageState();
 }
 
-class _CollectorMessageState extends State<CollectorMessage> {
+class _RequestsPageState extends State<RequestsPage> {
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
   CollectionReference requests =
       FirebaseFirestore.instance.collection('requests');
-  String userId = "TafaTr9BW3TIRW3NwzaSMVPA4S32";
-  // FirebaseAuth.instance.currentUser!.uid;
+  String userId = FirebaseAuth.instance.currentUser!.uid;
+
+  StkPush stkPushService = StkPush();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +42,7 @@ class _CollectorMessageState extends State<CollectorMessage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Requests received',
+                          'My requests',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
@@ -97,7 +81,7 @@ class _CollectorMessageState extends State<CollectorMessage> {
                                       AsyncSnapshot<DocumentSnapshot>
                                           snapshot) {
                                     if (snapshot.data == null) {
-                                      return Text('No request received');
+                                      return Text('Please register');
                                     }
                                     if (snapshot.hasError) {
                                       return Text("Something went wrong");
@@ -127,7 +111,7 @@ class _CollectorMessageState extends State<CollectorMessage> {
                                       AsyncSnapshot<DocumentSnapshot>
                                           snapshot) {
                                     if (snapshot.data == null) {
-                                      return Text('No request received');
+                                      return Text('Please register');
                                     }
                                     if (snapshot.hasError) {
                                       return Text("Something went wrong");
@@ -136,15 +120,10 @@ class _CollectorMessageState extends State<CollectorMessage> {
                                         ConnectionState.done) {
                                       Map<String, dynamic> data = snapshot.data!
                                           .data() as Map<String, dynamic>;
-                                      return Text( 'Location: '+
-                                        data['Location'] +
-                                            '\nBin level: ' +
-                                            data['Bin level']
-                                        // .toString() , '$data["Bin level"]'
-                                        // '\nBin level: $data["Bin level"]'
-                                        // +
-                                        // "\nLocation: $data['Location']"
-                                        ,
+                                      return Text(
+                                        'Bin level: ' +
+                                            data['Bin level'].toString() +
+                                            '\nPayment pending approval',
                                         style: TextStyle(
                                             color: Colors.grey,
                                             fontSize: 16,

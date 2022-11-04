@@ -7,6 +7,7 @@ import 'package:wasteapp/pages/bin_data_view.dart';
 import 'package:wasteapp/pages/collectors_page.dart';
 import 'package:wasteapp/pages/main_screen.dart';
 import 'package:wasteapp/pages/profile_page.dart';
+import 'package:wasteapp/sensordata/sensordata.dart';
 import 'package:wasteapp/widgets/drawer.dart';
 import 'collection_page.dart';
 import 'package:intl/intl.dart';
@@ -34,7 +35,6 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.green[800],
       body: SafeArea(
         child: Column(children: [
-          //Greetings
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Row(
@@ -93,7 +93,15 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                         color: Colors.green[200],
                         borderRadius: BorderRadius.circular(12)),
-                    child: Icon(Icons.notifications, color: Colors.white)),
+                    child: IconButton(
+                        onPressed: () {
+                          // print(getFirstSensorData());
+                          // getFirstSensorData();
+                          // print('Data : ${getFirstSensorData();}');
+                          // print('Data : ${getFirstSensorData()}');
+                          // print(firstV);
+                        },
+                        icon: Icon(Icons.notifications))),
               ],
             ),
           ),
@@ -124,29 +132,19 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: FontWeight.bold),
                     );
                   }
-                  return Column(
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      // crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Your next collection date is',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ),
-                        // Expanded(
-                        //   child:
-                        Text(
-                          DateFormat.yMMMMd('en_US')
-                              .format(data['date'].toDate()),
-                          style: TextStyle(
-                              color: Colors.white,
-                              // fontWeight: FontWeight.bold,
-                              fontSize: 18),
-                        ),
-                        // )
-                      ]);
+                  return Column(children: [
+                    Text(
+                      'Your next collection date is',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                    Text(
+                      DateFormat.yMMMMd('en_US').format(data['date'].toDate()),
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ]);
                 }
 
                 return Text("loading");
@@ -160,7 +158,6 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: Container(
               padding: EdgeInsets.all(28),
-              // color: Colors.grey[300],
               decoration: BoxDecoration(
                 color: Colors.grey[300],
                 borderRadius: BorderRadius.only(
@@ -171,7 +168,6 @@ class _HomePageState extends State<HomePage> {
               child: Center(
                 child: Column(
                   children: [
-                    //exercise heading
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -180,7 +176,6 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
-                        // Icon(Icons.people),
                         IconButton(
                             onPressed: () {
                               Navigator.push(
@@ -193,7 +188,6 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(height: 20),
-
                     Expanded(
                       child: ListView(
                         children: [
@@ -242,23 +236,20 @@ class _HomePageState extends State<HomePage> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16)),
-                                subtitle:
-                                    //Text('From IOT'),
-                                    FutureBuilder(
-                                        future: getSensorData(),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot snapshot) {
-                                          if (snapshot.data == null) {
-                                            return Text(
-                                                'Not connected to a bin');
-                                          }
-                                          return Text(
-                                            int.parse(snapshot.data) > 200
-                                                ? 'Waste level is ${snapshot.data}'
-                                                : 'Waste level is ${snapshot.data} . Please check',
-                                            style: TextStyle(color: Colors.red),
-                                          );
-                                        }),
+                                subtitle: FutureBuilder(
+                                    future: getSensorData(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot snapshot) {
+                                      if (snapshot.data == null) {
+                                        return Text('Loading ....');
+                                      }
+                                      return Text(
+                                        int.parse(snapshot.data) > 200
+                                            ? 'Waste level is ${snapshot.data}'
+                                            : 'Waste level is ${snapshot.data} . Please check',
+                                        style: TextStyle(color: Colors.red),
+                                      );
+                                    }),
                               ),
                             ),
                           ),
@@ -310,7 +301,6 @@ class _HomePageState extends State<HomePage> {
                                     return Text("loading");
                                   },
                                 ),
-                                // trailing: Icon(Icons.more_horiz),
                               ),
                             ),
                           ),
@@ -362,7 +352,6 @@ class _HomePageState extends State<HomePage> {
                                     return Text("loading");
                                   },
                                 ),
-                                // trailing: Icon(Icons.more_horiz),
                               ),
                             ),
                           ),
@@ -370,7 +359,6 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -382,7 +370,7 @@ class _HomePageState extends State<HomePage> {
                               context, CollectionPage.routeName);
                         },
                         child: Text(
-                          'Initiate collection',
+                          'Request for collection',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -396,6 +384,8 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  //function to get user data from thingspeak
 
   getSensorData() async {
     var url =
@@ -412,7 +402,26 @@ class _HomePageState extends State<HomePage> {
       throw Exception("failed to fetch data from thingspeak");
     }
   }
+
+  Future<String> getFirstSensorData() async {
+    var url =
+        "https://api.thingspeak.com/channels/1861455/feeds.json?api_key=CACC19YOE9ZU2AOQ&results=2";
+    var response = await http.get(Uri.parse(url));
+
+    Channel channelData = channelFromMap(response.body);
+
+    List<Feed> feedData = channelData.feeds;
+
+    String data1 = feedData[0].field1;
+    return data1;
+    // if (response.statusCode == 200) {
+    // } else {
+    //   throw Exception("failed to fetch data from thingspeak");
+    // }
+  }
 }
+
+//function to sign out
 
 Future<void> signOut() async {
   User? user = FirebaseAuth.instance.currentUser;
@@ -424,6 +433,7 @@ Future<void> signOut() async {
   });
 }
 
+// this class sets the bottom navigation bar to allow easier switching between different pages and screens
 class BottomNavigationPage extends StatefulWidget {
   const BottomNavigationPage({Key? key}) : super(key: key);
 

@@ -20,25 +20,19 @@ class CollectorInitiate extends StatefulWidget {
 class _CollectorInitiateState extends State<CollectorInitiate> {
   final _numberFocusNode = FocusNode();
   final _locationFocusNode = FocusNode();
-  // final _apartmentFocusNode = FocusNode();
-  //final _housesFocusNode = FocusNode();
-  //final _dateFocusNode = FocusNode();
+  
   TextEditingController dateController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  // final user = FirebaseAuth.instance.currentUser;
+
   final _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
   late String userId = user!.uid;
   late String? userEmail = user!.email;
   final String role = 'Collector';
 
-  // var _userData = userModel.email = user.email
-
-  //final _userId = user!.uid;
+  
   var _userData = UserModel(
-      // uid: userId,
-      // email: user!.email,
-      // wrool: wrool,
+   
       fullName: null,
       number: '',
       location: '',
@@ -50,8 +44,7 @@ class _CollectorInitiateState extends State<CollectorInitiate> {
   void dispose() {
     _numberFocusNode.dispose();
     _locationFocusNode.dispose();
-    //_apartmentFocusNode.dispose();
-    // _housesFocusNode.dispose();
+   
 
     super.dispose();
   }
@@ -59,8 +52,7 @@ class _CollectorInitiateState extends State<CollectorInitiate> {
   void _saveForm() async {
     _formKey.currentState!.save();
 
-    // print(_userData.number);
-    // print(_userData.date);
+  
 
     try {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -72,10 +64,9 @@ class _CollectorInitiateState extends State<CollectorInitiate> {
       userModel.fullName = _userData.fullName;
       userModel.number = _userData.number;
       userModel.location = _userData.location;
-      // userModel.apartment = _userData.apartment;
-      //userModel.houses = _userData.houses;
+    
       userModel.date = _userData.date;
-      // userModel.wrool = rool;
+
       await firebaseFirestore
           .collection("users")
           .doc(user.uid)
@@ -93,9 +84,7 @@ class _CollectorInitiateState extends State<CollectorInitiate> {
       backgroundColor: Colors.green[800],
       body: SafeArea(
         child: Column(children: [
-          //  SizedBox(height: 25),
-
-          //white area
+      
           Expanded(
             child: Container(
               padding: EdgeInsets.all(25),
@@ -108,7 +97,7 @@ class _CollectorInitiateState extends State<CollectorInitiate> {
                       // ignore: prefer_const_literals_to_create_immutables
                       children: [
                         Text(
-                          'Collector Initiate collection',
+                          'Collector start collection',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
@@ -197,17 +186,14 @@ class _CollectorInitiateState extends State<CollectorInitiate> {
                               SizedBox(height: sizedboxheight),
                               TextFormField(
                                 textInputAction: TextInputAction.next,
-                                // onFieldSubmitted: (_) {
-                                //   FocusScope.of(context)
-                                //       .requestFocus(_apartmentFocusNode);
-                                // },
+                         
                                 focusNode: _locationFocusNode,
                                 decoration: InputDecoration(
-                                    labelText: 'Location',
-                                    hintText: 'Area of collection'),
+                                    labelText: 'Routes',
+                                    hintText: 'Routes of collection'),
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    return 'Please enter location';
+                                    return 'Please enter your routes';
                                   }
                                   return null;
                                 },
@@ -222,67 +208,7 @@ class _CollectorInitiateState extends State<CollectorInitiate> {
                                   );
                                 },
                               ),
-                              //Apartment
-                              // SizedBox(height: sizedboxheight),
-                              // TextFormField(
-                              //   //  controller: apartmentController,
-                              //   textInputAction: TextInputAction.next,
-                              //   onFieldSubmitted: (_) {
-                              //     FocusScope.of(context)
-                              //         .requestFocus(_housesFocusNode);
-                              //   },
-                              //   focusNode: _apartmentFocusNode,
-                              //   decoration: InputDecoration(
-                              //     hintText: 'Enter apartment',
-                              //     labelText: 'Apartment',
-                              //     fillColor: Colors.white,
-                              //   ),
-                              //   validator: (value) {
-                              //     if (value!.isEmpty) {
-                              //       return 'Enter your apartment';
-                              //     }
-                              //     if (int.parse(value) <= 0) {
-                              //       return 'Enter a number greater than zero';
-                              //     }
-                              //     return null;
-                              //   },
-                              //   onSaved: (value) {
-                              //     _userData = UserModel(
-                              //       fullName: _userData.fullName,
-                              //       number: _userData.number,
-                              //       location: _userData.location,
-                              //       apartment: value.toString(),
-                              //       houses: _userData.houses,
-                              //       date: _userData.date,
-                              //     );
-                              //   },
-                              // ),
-                              //Number of houses
-                              // SizedBox(height: sizedboxheight),
-                              // TextFormField(
-                              //   textInputAction: TextInputAction.next,
-                              //   focusNode: _housesFocusNode,
-                              //   keyboardType: TextInputType.number,
-                              //   decoration: InputDecoration(
-                              //       labelText: 'Number of houses',
-                              //       hintText: 'No of houses'),
-                              //   validator: (value) {
-                              //     if (value!.isEmpty) {
-                              //       return 'Enter number of houses';
-                              //     }
-                              //     return null;
-                              //   },
-                              //   onSaved: (value) {
-                              //     _userData = UserModel(
-                              //       fullName: _userData.fullName,
-                              //       number: _userData.number,
-                              //       location: _userData.location,
-                              //       apartment: _userData.apartment,
-                              //       houses: int.parse(value!),
-                              //       date: _userData.date,
-                              //     );
-                              //   },
-                              // ),
+                    
                               SizedBox(height: sizedboxheight),
                               TextFormField(
                                 controller: dateController,

@@ -42,13 +42,13 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.green[800],
-      // Colors.orange[900],
+      
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Container(
               color: Colors.green[800],
-              // Colors.orangeAccent[700],
+              
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: SingleChildScrollView(
@@ -326,9 +326,7 @@ class _RegisterState extends State<Register> {
         .set(userModel.toMap());
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => MainScreen()));
-    // registerRedirect();
-    //   .then((value) {
-    // registerRedirect()
+   
   }
 
   registerRedirect() {
@@ -348,7 +346,6 @@ class _RegisterState extends State<Register> {
                     if (user['wrool'] == 'Collector') {
                       return CollectorRegister();
                     } else if (user['wrool'] == 'Tenant') {
-                      //return HomePage();
                       return CollectionRegister();
                     }
                   }

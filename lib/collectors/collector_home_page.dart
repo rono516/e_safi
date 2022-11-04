@@ -90,13 +90,13 @@ class _CollectorPgaeState extends State<CollectorPgae> {
                             fontSize: 18,
                             fontWeight: FontWeight.bold)),
                     SizedBox(height: 8),
-                    Text("location and a phone number",
+                    Text("your routes and a phone number",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
                             fontWeight: FontWeight.bold)),
                     SizedBox(height: 8),
-                    Text("to initiate a collection",
+                    Text("to start collection",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -135,7 +135,7 @@ class _CollectorPgaeState extends State<CollectorPgae> {
                               context, CollectorInitiate.routeName);
                         },
                         child: Text(
-                          'Initiate collection',
+                          'Start collection',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

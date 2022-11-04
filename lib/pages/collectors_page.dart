@@ -21,7 +21,7 @@ class _CollectorsPageState extends State<CollectorsPage> {
         child: Column(children: [
           SizedBox(height: 25),
 
-          //white area
+  
           Expanded(
             child: Container(
               padding: EdgeInsets.all(25),
@@ -29,7 +29,7 @@ class _CollectorsPageState extends State<CollectorsPage> {
               child: Center(
                 child: Column(
                   children: [
-                    //exercise heading
+             
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -38,7 +38,7 @@ class _CollectorsPageState extends State<CollectorsPage> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
-                        // Icon(Icons.home, color: Colors.green),
+                    
                         IconButton(
                             onPressed: () {},
                             icon: Icon(Icons.people, color: Colors.green[700]))
@@ -46,7 +46,6 @@ class _CollectorsPageState extends State<CollectorsPage> {
                     ),
                     SizedBox(height: 20),
 
-                    //ListView of exercises
                     Expanded(
                       child: ListView(
                         children: [
@@ -93,20 +92,20 @@ class _CollectorsPageState extends State<CollectorsPage> {
                                                     ),
                                                     isThreeLine: true,
                                                     title: Text(
-                                                        //should be location
+                                                       'Routes: ' +
                                                         collectors[index]
                                                                 ['location'] ??
                                                             '''
                                                             Email: ${collectors[index]['email']}
                                                              Location: Not collecting
                                                                ''',
-                                                        // 'Location',
+                                                   
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 16)),
                                                     subtitle: Text(
-                                                      //should be phone number
+                                                       'Call: '+
                                                       collectors[index]
                                                               ['number'] ??
                                                           'Number: Not reachable',
@@ -114,7 +113,7 @@ class _CollectorsPageState extends State<CollectorsPage> {
                                                           color: Colors.grey),
                                                     ),
                                                     trailing:
-                                                        // Icon(Icons.message)
+                                               
                                                         IconButton(
                                                             color: Colors.green,
                                                             onPressed: () {
@@ -131,7 +130,7 @@ class _CollectorsPageState extends State<CollectorsPage> {
                                                 ],
                                               ),
 
-                                              // SizedBox(height: 15),
+                                     
                                             );
                                           });
                                     }

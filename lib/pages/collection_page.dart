@@ -18,6 +18,7 @@ class CollectionPage extends StatefulWidget {
 
 class _CollectionPageState extends State<CollectionPage> {
   String stkUrl = "http://10.0.2.2:8000/tests/stk-push/success";
+  // String stkUrl = "http://127.0.0.1:8000/";
   final _auth = FirebaseAuth.instance;
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   String userId = FirebaseAuth.instance.currentUser!.uid;
@@ -110,7 +111,7 @@ class _CollectionPageState extends State<CollectionPage> {
                                     builder: (BuildContext context,
                                         AsyncSnapshot snapshot) {
                                       if (snapshot.data == null) {
-                                        return Text('Not connected to a bin');
+                                        return Text('Loading ....');
                                       }
                                       return Text(
                                         int.parse(snapshot.data) > 200
@@ -189,7 +190,7 @@ class _CollectionPageState extends State<CollectionPage> {
                         onPressed: () {
                           // stkPushService.getStkPush();
                           try {
-                            http
+                        http
                                 .get(Uri.parse(stkUrl))
                                 .then((value) => {registerRequest()});
                           } catch (error) {
@@ -197,7 +198,7 @@ class _CollectionPageState extends State<CollectionPage> {
                           }
                         },
                         child: Text(
-                          'Make Payment',
+                          'Make request',
                           style: TextStyle(color: Colors.white, fontSize: 15),
                         )),
                   ],
@@ -216,8 +217,9 @@ class _CollectionPageState extends State<CollectionPage> {
 
     await firebaseFirestore.collection("requests").doc(user!.uid).set({
       'Date': DateTime.parse(DateTime.now().toString()),
-      'Bin level': "188",
-      'Location': 'Ngara'
+      'Bin level': "39",
+      'Location': 'Ngara',
+      'Payment' : 'Payment request sent to user'
     });
 
     Navigator.pushReplacement(
@@ -239,4 +241,6 @@ class _CollectionPageState extends State<CollectionPage> {
       throw Exception("failed to fetch data from thingspeak");
     }
   }
+
+  
 }

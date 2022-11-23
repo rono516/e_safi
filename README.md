@@ -3,8 +3,8 @@ This is a mobile application developed to ease waste management by providing a p
 Some of the functionalities for the users include;
 
 ## Tenants/Caretakers:
--Sign-up
--Login
++ Sign-up
++ Login
 -Register for collection
 -Monitor their waste in bins
 -Initiate collection based on data from IOT sensors

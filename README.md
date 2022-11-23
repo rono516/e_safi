@@ -2,7 +2,7 @@
 This is a mobile application developed to ease waste management by providing a platform to tenants and/or caretakers to monitor waste using IOT (Internet of Things) for constant awareness around them and to then make decisions based on the information available. The platform also onboards collectors who can 'Start Collection' to alert users (tenants/caretakers or other collectors of their routes and date of collection to enable them map their routes in advance.
 Some of the functionalities for the users include;
 
-#Tenants/Caretakers:
+# Tenants/Caretakers:
 -Sign-up
 -Login
 -Register for collection

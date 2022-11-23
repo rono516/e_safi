@@ -5,23 +5,17 @@ Some of the functionalities for the users include;
 ## Tenants/Caretakers:
 + Sign-up
 + Login
--Register for collection
--Monitor their waste in bins
--Initiate collection based on data from IOT sensors
--Check and view collectors and their routes of collection, contacts
--Initiate a collection request with any collector real-time and view their requests
--Manage their profile
++ Register for collection
++ Monitor their waste in bins
++ Initiate collection based on data from IOT sensors
++ Check and view collectors and their routes of collection, contacts
++ Initiate a collection request with any collector real-time and view their requests
++ Initiate payments using M-pesa while making their requests
++ Manage their profile
 
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Collectors
++ Sign-up
++ Login
++ Start Collection and provide routes and contacts to the users
++ View requests from the users and view payment details/ information

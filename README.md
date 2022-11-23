@@ -21,15 +21,27 @@ Some of the functionalities for the users include;
 + View requests from the users and view payment details/ information
 
 
+## UI Photo dump
+
 
 ![Screenshot (142)](https://user-images.githubusercontent.com/55147824/203656549-48d735f4-f494-4be2-bd5f-b075308ebadb.png)
+
 ![Screenshot (144)](https://user-images.githubusercontent.com/55147824/203656589-07d9edbe-c463-42cf-aaea-116de2cbebb2.png)
+
 ![Screenshot (146)](https://user-images.githubusercontent.com/55147824/203656627-eaaf3c00-134f-4cf5-a12a-cdf38872cb60.png)
+
 ![Screenshot (148)](https://user-images.githubusercontent.com/55147824/203656658-d8d0dfe0-7edc-416c-99e9-83548fb1a996.png)
+
 ![Screenshot (150)](https://user-images.githubusercontent.com/55147824/203656693-120cfe8e-717a-4a21-ae9e-07092484f43b.png)
+
 ![Screenshot (152)](https://user-images.githubusercontent.com/55147824/203656727-1fa33899-deb8-4af5-8340-6553e89377c9.png)
+
 ![Screenshot (154)](https://user-images.githubusercontent.com/55147824/203656756-bfa11356-6787-4f69-9ee7-bcbc3b9ef3c5.png)
+
 ![Screenshot (156)](https://user-images.githubusercontent.com/55147824/203656781-41f067cd-705c-4a70-a14f-88768587c4d2.png)
+
 ![Screenshot (159)](https://user-images.githubusercontent.com/55147824/203656809-add8483d-0885-4699-a50c-76d9147e6973.png)
+
 ![Screenshot (160)](https://user-images.githubusercontent.com/55147824/203656833-9f2f96fd-148d-46ab-aa4a-92c1eb6777ba.png)
+
 ![Screenshot (171)](https://user-images.githubusercontent.com/55147824/203656914-738c4019-6936-4dac-9410-98417216f425.png)

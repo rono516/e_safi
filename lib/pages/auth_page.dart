@@ -196,7 +196,7 @@ class _AuthCardState extends State<AuthCard> {
                         textStyle: TextStyle(
                             color: Theme.of(context)
                                 .primaryTextTheme
-                                .button!
+                                .labelLarge!
                                 .color)),
 
                     // color: Theme.of(context).primaryColor,
